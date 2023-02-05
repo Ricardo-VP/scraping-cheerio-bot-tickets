@@ -22,7 +22,7 @@ const selectors = {
   },
   locations: 'h2.elementor-heading-title',
   status:
-    'div.elementor-button-wrapper a.elementor-button span.elementor-button-content-wrapper span.elementor-button-text',
+    'div.elementor-button-wrapper a span.elementor-button-content-wrapper span.elementor-button-text',
 }
 
 export async function runScraper() {
@@ -38,7 +38,7 @@ export async function runScraper() {
     shows.each((i, show) => {
       const locations = $(show).find(selectors.locations)
 
-      $(locations).each((i, location) => {
+      $(locations).each((_, location) => {
         if (
           $(location).children().length === 0 &&
           $(location).text().includes(options.location)
@@ -61,6 +61,13 @@ export async function runScraper() {
         }
       })
     })
+
+    let today = new Date();
+    let date = `${today.getFullYear()}-${(today.getMonth()+1)}-${today.getDate()}`
+    let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`
+    let dateTime = `${date} ${time}`;
+
+    console.info(`INFO (SCRAPER)      ----> Scraping realizado: ${dateTime}`)
 
     return response
   })

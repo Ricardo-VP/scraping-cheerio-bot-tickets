@@ -17,16 +17,18 @@ Bot.command('suscribirmexd', async (ctx) => {
 
     if (status === 'success') {
       ctx.reply(message)
-      console.log(`----> Mensaje enviado al usuario <${userName}> \n`)
+      console.log(`INFO (SUCESS)       ----> El usuario <${userName}> ha sido alertado`)
     }
   }, 30000)
 
   suscriptions.set(userId, interval)
   ctx.reply('Te avisaré cuando los tickets estén disponibles! ❤️')
+  console.log(`INFO (+1 SUB)       ----> El usuario <${userName}> se ha suscrito`)
 })
 
 Bot.command('stop', (ctx) => {
   const userId = ctx.message.from.id
+  const userName = `${ctx.message.from.first_name } ${ctx.message.from.last_name }`
 
   if (!suscriptions.has(userId)) {
     ctx.reply('No estás suscripto para recibir mensajes sobre los tickets.')
@@ -37,6 +39,7 @@ Bot.command('stop', (ctx) => {
   suscriptions.delete(userId)
 
   ctx.reply('Ya no se te enviarán más mensajes sobre los tickets 😢')
+  console.log(`INFO (-1 SUB)       ----> El usuario <${userName}> se ha desuscrito`)
 })
 
 Bot.launch()
