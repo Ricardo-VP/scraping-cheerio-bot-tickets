@@ -19,7 +19,11 @@ Bot.command('suscribirmexd', async (ctx) => {
       ctx.reply(message)
       console.log(`----> Mensaje enviado al usuario <${userName}> \n`)
     }
+<<<<<<< HEAD
   }, 30000)
+=======
+  }, 60000)
+>>>>>>> 3f24538cf1b20b79ac3a208b2bc7d6729d3fbfb3
 
   suscriptions.set(userId, interval)
   ctx.reply('Te avisaré cuando los tickets estén disponibles! ❤️')
