@@ -25,11 +25,16 @@ const selectors = {
     'div.elementor-button-wrapper a.elementor-button span.elementor-button-content-wrapper span.elementor-button-text',
 }
 
-export function runScraper() {
-  getHTML().then((res) => {
+export async function runScraper() {
+  return await getHTML().then((res) => {
     const $ = cheerio.load(res)
     const shows = $(selectors.prefix.elements)
 
+    let response = {
+      message: '',
+      status: 'pending'
+    }
+    
     shows.each((i, show) => {
       const locations = $(show).find(selectors.locations)
 
@@ -44,20 +49,19 @@ export function runScraper() {
             .find(selectors.status)
             .text()
 
+
           if (_status === options.defaultStatus) {
-            console.log('-------------------------------------------------')
-            console.log(`Localidad: ${_location}`)
-            console.log(`Estado: ${_status}`)
-            console.log('-------------------------------------------------')
+            response.message += `Localidad: ${_location}\n`
+            response.message += `Estado: ${_status}\n`
           } else {
-            console.log('-------------------------------------------------')
-            console.log('ALERTA ALERTA ALERTA ALERTA ALERTA ALERTA ALERTA ')
-            console.log(`Estado: ${_status}`)
-            console.log('ALERTA ALERTA ALERTA ALERTA ALERTA ALERTA ALERTA ')
-            console.log('-------------------------------------------------')
+            response.message += 'ALERTA ALERTA ALERTA ALERTA ALERTA ALERTA ALERTA\n'
+            response.message += `Estado: ${_status}\n`
+            response.status = 'success'
           }
         }
       })
     })
+
+    return response
   })
 }
