@@ -1,5 +1,9 @@
 # Web/Bot Scraper - Class Music shows
 
+## Description
+
+Send an message every ```30 seconds``` when the tickets are available using a Telegram Bot
+
 ## Techonologies
 1. Cheerio
 2. NodeJS
